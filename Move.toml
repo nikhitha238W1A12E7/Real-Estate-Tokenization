@@ -1,0 +1,15 @@
+[package]
+name = "RealEstateTokenization"
+version = "1.0.0"
+authors = []
+
+[addresses]
+SendMessage = "0x9bc411dc570b2dd9a0c121aec2ce2b1e4ebde9a31f3a17df6a0510d93f627804"
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
