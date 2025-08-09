@@ -3,17 +3,16 @@ module SendMessage::RealEstateTokenization {
     use aptos_framework::coin;
     use aptos_framework::aptos_coin::AptosCoin;
 
-    /// Struct representing a tokenized real estate property.
+    
     struct RealEstateProperty has store, key {
-        total_tokens: u64,        // Total tokens representing the property
-        tokens_sold: u64,         // Number of tokens sold to investors
-        price_per_token: u64,     // Price per token in APT
-        property_value: u64,      // Total value of the property
-        owner: address,           // Original property owner
+        total_tokens: u64,        
+        tokens_sold: u64,        
+        price_per_token: u64,     
+        property_value: u64,      
+        owner: address,           
     }
 
-    /// Function to tokenize a real estate property.
-    /// Creates tokens representing fractional ownership of the property.
+   
     public fun tokenize_property(
         owner: &signer, 
         property_value: u64, 
@@ -33,8 +32,7 @@ module SendMessage::RealEstateTokenization {
         move_to(owner, property);
     }
 
-    /// Function for investors to buy property tokens.
-    /// Allows fractional ownership investment in real estate.
+   
     public fun buy_property_tokens(
         investor: &signer, 
         property_owner: address, 
@@ -42,20 +40,21 @@ module SendMessage::RealEstateTokenization {
     ) acquires RealEstateProperty {
         let property = borrow_global_mut<RealEstateProperty>(property_owner);
         
-        // Check if enough tokens are available
+        
         assert!(
             property.tokens_sold + token_amount <= property.total_tokens, 
-            1 // Error code for insufficient tokens
+            
         );
         
-        // Calculate total cost
+        
         let total_cost = token_amount * property.price_per_token;
         
-        // Transfer payment from investor to property owner
+       
         let payment = coin::withdraw<AptosCoin>(investor, total_cost);
         coin::deposit<AptosCoin>(property_owner, payment);
         
-        // Update tokens sold
+        
         property.tokens_sold = property.tokens_sold + token_amount;
     }
+
 }
